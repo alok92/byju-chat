@@ -47,10 +47,6 @@ const StyledNavigation = styled("ul")`
       }
     }
     
-    .blinking {
-      animation: pulse 1s infinite;
-    }
-    
     @keyframes pulse {
       0% {
         background-color: ${props => props.theme.secondaryLightColor};

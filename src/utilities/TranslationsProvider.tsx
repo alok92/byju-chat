@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as translationsDE from '../translations/translations-de.json';
 import * as translationsEN from '../translations/translations-en.json';
 import { readRecord } from './localStorageService';
-import { darkTheme, lightTheme, ThemeProvider } from '../theme';
+import { darkTheme, ThemeProvider } from '../theme';
 
 export interface IAppContext {
   clockDisplay: string;
@@ -41,7 +41,7 @@ export const AppContextConsumer = context.Consumer;
 export default class TranslationProvider extends React.Component {
   public state = {
     translations: readRecord('lang') !== 'de' ? translationsEN : translationsDE,
-    colorTheme: readRecord('theme') !== 'dark' ? lightTheme : darkTheme
+    colorTheme: darkTheme
   };
 
   public render() {
@@ -51,7 +51,6 @@ export default class TranslationProvider extends React.Component {
       <AppContextProvider value={{
         state: this.state,
         changeLanguage: this.changeLanguage,
-        changeTheme: this.changeTheme,
       }}>
         <ThemeProvider theme={colorTheme}>
           {this.props.children as any}
@@ -59,12 +58,6 @@ export default class TranslationProvider extends React.Component {
       </AppContextProvider>
     )
   }
-
-  private changeTheme = () => {
-    this.setState({
-      colorTheme: this.state.colorTheme === lightTheme ? darkTheme : lightTheme
-    });
-  };
 
   private changeLanguage = () => {
     this.setState({
